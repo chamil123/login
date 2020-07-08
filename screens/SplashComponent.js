@@ -65,12 +65,12 @@ export default class SplashComponent extends React.Component {
                             <ScrollView
                                 contentInsetAdjustmentBehavior="automatic"
                                 style={styles.scrollView}>
-                                <LinearGradient
+                                {/* <LinearGradient
                                     colors={['red', 'yellow', 'green']}
                                     style={styles.linearGradient}
                                 >
                                     <Text>Vertical Gradient</Text>
-                                </LinearGradient>
+                                </LinearGradient> */}
                                 <Text style={styles.title}>Stay Connect with everyone</Text>
                                 <Text style={styles.text}>Sign in with account</Text>
 

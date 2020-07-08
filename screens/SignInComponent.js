@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text,ScrollView, StyleSheet, StatusBar, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text,ScrollView, StyleSheet, StatusBar, TouchableOpacity, Dimensions,Alert } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import *as Animatable from 'react-native-animatable';
 import { TextInput } from 'react-native-paper';
@@ -54,6 +54,37 @@ const styles = StyleSheet.create({
 
 });
 export default class SignInComponent extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            TextInputName: '',
+            TextInputpassword: ''
+        }
+    }
+    InputUsers = () => {
+        const { TextInputName } = this.state;
+        const { TextInputpassword } = this.state;
+
+        fetch('http://192.168.8.106/tr_reactnative/loginCheck.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                member_name: TextInputName,
+                member_password: TextInputpassword,
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                Alert.alert(responseJson);
+                this.props.navigation.navigate('HomeComponent');
+            }).catch((error) => {
+                console.error(error);
+            })
+    }
+
+
     render() {
         return (
 
@@ -68,11 +99,11 @@ export default class SignInComponent extends React.Component {
                             contentInsetAdjustmentBehavior="automatic"
                             style={styles.scrollView}>
                             <Text style={styles.text}>Use email to Login</Text>
-                            <TextInput style={{ backgroundColor: 'white', marginTop: 80 }} label="Email" />
-                            <TextInput style={{ backgroundColor: 'white', marginTop: 30 }} label="Password" />
+                            <TextInput onChangeText={TextInputValue => this.setState({ TextInputName: TextInputValue })} style={{ backgroundColor: 'white', marginTop: 80 }} label="Email" />
+                            <TextInput onChangeText={TextInputValue => this.setState({ TextInputpassword: TextInputValue })} style={{ backgroundColor: 'white', marginTop: 30 }} label="Password" />
 
 
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignInComponent')}>
+                            <TouchableOpacity  onPress={this.InputUsers}>
                                 <View style={{
                                     backgroundColor: '#ff9100', alignItems: 'center',
                                     justifyContent: 'center', borderRadius: 25,
@@ -80,7 +111,7 @@ export default class SignInComponent extends React.Component {
                                     marginTop: 50
                                 }}
                                 >
-                                    <Text style={{ color: 'white' }}>Button</Text>
+                                    <Text style={{ color: 'white' }}>Login</Text>
                                 </View>
                             </TouchableOpacity>
                         </ScrollView>

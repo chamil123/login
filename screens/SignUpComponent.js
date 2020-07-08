@@ -83,8 +83,8 @@ export default class SignUpComponent extends React.Component {
             })
         }).then((response) => response.json())
             .then((responseJson) => {
-                // Alert.alert(responseJson);
-         this.props.navigation.navigate('HomeComponent');
+                Alert.alert(responseJson);
+                this.props.navigation.navigate('HomeComponent');
             }).catch((error) => {
                 console.error(error);
             })
